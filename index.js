@@ -9,15 +9,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const connection = mysql.createConnection({
-    host: "testdb1.cp88egymboqh.ap-south-1.rds.amazonaws.com",
-    user: "root",
-    password: "host1234",
-    database: "testdb1"
+    host     : process.env.RDS_HOSTNAME,
+    user     : process.env.RDS_USERNAME,
+    password : process.env.RDS_PASSWORD,
+    port     : process.env.RDS_PORT
 });
 
 connection.connect(error => {
-    if (error) throw error;
-    console.log("Successfully connected to the database.");
+    if (error) console.log("Error: Connection failed: ",error.stack);
+    else
+        console.log("Successfully connected to the database.");
 });
 
 app.get('/', (req, res) => {
