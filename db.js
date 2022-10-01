@@ -12,3 +12,5 @@ connection.connect(error => {
     else
         console.log("Successfully connected to the database: ",process.env.RDS_DB_NAME);
 });
+
+module.exports = connection;
