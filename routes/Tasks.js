@@ -27,7 +27,7 @@ router.get("/:id", (req, res) => {
 
 
 router.post("/", (req, res) => {
-    sql.query("INSERT INTO task VALUES (taskName,createdDate,taskId)", req.body.taskName,req.body.createdDate,req.body.taskId, (err, result) => {
+    sql.query("INSERT INTO task (taskName,createdDate,taskId) VALUES(?,?,?)", req.body.taskName,req.body.createdDate,req.body.taskId, (err, result) => {
         if (err) {
             console.log("Error: ", err);
             res.status(500).send(err);
