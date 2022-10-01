@@ -62,6 +62,19 @@ router.put("/:id", (req, res) => {
     });
 })
 
+router.put("/:id", (req, res) => {
+    var datetime = new Date();
+    sql.query("UPDATE task SET completedDate=?,isCompleted = ? WHERE taskId = ?", [datetime.toISOString().slice(0,10),req.body.isCompleted,req.params.id], (err, result) => {
+        if (err) {
+            console.log("Error: ", err);
+            res.status(500).send(err);
+        } else {
+            console.log("Successfully updated the task with id: ",req.params.id);
+            res.status(200).send(result);
+        }
+    });
+})
+
 router.delete("/:id", (req, res) => {
     sql.query("DELETE FROM task WHERE taskId = ?", req.params.id, (err, result) => {
         if (err) {
