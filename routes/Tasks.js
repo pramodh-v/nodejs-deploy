@@ -13,4 +13,29 @@ router.get("/", (req, res) => {
     });
 })
 
+router.get("/:id", (req, res) => {
+    sql.query("SELECT * FROM task WHERE taskId = ?", req.params.id, (err, result) => {
+        if (err) {
+            console.log("Error: ", err);
+            res.status(500).send(err);
+        } else {
+            console.log("Successfully retrieved the task with id: ",req.params.id);
+            res.status(200).send(result);
+        }
+    });
+})
+
+
+router.post("/", (req, res) => {
+    sql.query("INSERT INTO task VALUES (?,?,?,?,?)", req.body.taskName,req.body.createdDate,NULL,0,req.body.taskId, (err, result) => {
+        if (err) {
+            console.log("Error: ", err);
+            res.status(500).send(err);
+        } else {
+            console.log("Successfully inserted the task");
+            res.status(200).send(result);
+        }
+    });
+})
+
 module.exports = router;
